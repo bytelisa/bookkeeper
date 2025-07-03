@@ -2,7 +2,7 @@ name: BOOKKEEPER CI Build
 
 on:
   push:
-    branches: [ "progetto-testing" ]
+    branches: [ "master" ]
   pull_request:
     branches: [ "main" ]
 
