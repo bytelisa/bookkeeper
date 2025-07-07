@@ -22,10 +22,6 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-#      - name: Build with Maven
-#        run: mvn -B clean install
-
       - name: Build with Maven
-        run: >
-          mvn clean install  
-          -pl '!circe-checksum,!cpu-affinity,!native-io,!native-library-common'
+        run: mvn -B clean install
+
