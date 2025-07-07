@@ -1189,6 +1189,11 @@
         <artifactId>download-maven-plugin</artifactId>
         <version>${download-maven-plugin.version}</version>
       </plugin>
+      <!--
+  DISABILITATO PER IL PROGETTO DI TESTING
+  esegue script bash che non sono compatibili con Windows
+  e dipendono da file rimossi.
+-->
 <!--      <plugin>-->
 <!--        <groupId>org.codehaus.mojo</groupId>-->
 <!--        <artifactId>exec-maven-plugin</artifactId>-->
