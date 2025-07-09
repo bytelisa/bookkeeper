@@ -72,6 +72,7 @@
     <module>tests</module>
 <!--    <module>native-io</module>-->
     <module>testtools</module>
+    <!-- progetto testing: creato per il report di jacoco (secondo guida Multi-module project) -->
   </modules>
   <mailingLists>
     <mailingList>
@@ -991,6 +992,53 @@
             <doclint>none</doclint>
           </configuration>
         </plugin>
+
+        <!-- =================================================================== -->
+        <!--                  JACOCO PLUGIN                                    -->
+        <!-- =================================================================== -->
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.12</version>
+          <executions>
+            <execution>
+              <id>prepare-agent</id>
+              <goals>
+                <goal>prepare-agent</goal>
+              </goals>
+              <configuration>
+                <propertyName>jacoco.agent.argLine</propertyName>
+              </configuration>
+            </execution>
+            <execution>
+              <id>report</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>report</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!--progetto testing: PIT (Mutation Testing) -->
+        <plugin>
+          <groupId>org.pitest</groupId>
+          <artifactId>pitest-maven</artifactId>
+          <version>1.9.0</version>
+          <configuration>
+            <targetClasses>
+              <!-- classi da mutare -->
+              <param>org.apache.bookkeeper.bookie.BufferedChannel</param>
+              <param>org.apache.bookkeeper.client.BookieInfoReader</param>
+            </targetClasses>
+            <targetTests>
+              <!-- test da eseguire -->
+              <param>org.apache.bookkeeper.bookie.BufferedChannelTest</param>
+              <param>org.apache.bookkeeper.client.BookieInfoReaderTest</param>
+            </targetTests>
+          </configuration>
+        </plugin>
+
       </plugins>
     </pluginManagement>
     <plugins>
@@ -1001,6 +1049,11 @@
         <configuration>
           <excludeFilterFile>${session.executionRootDirectory}/buildtools/src/main/resources/bookkeeper/findbugsExclude.xml</excludeFilterFile>
         </configuration>
+      </plugin>
+      <!-- Attivazione JaCoCo -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -1022,6 +1075,33 @@
           </compilerArgs>
         </configuration>
       </plugin>
+
+      <!-- =================================================================== -->
+      <!--                  SUREFIRE PLUGIN MODIFICATO                       -->
+      <!-- =================================================================== -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <!-- 1. Combiniamo l'argLine originale con quella di JaCoCo -->
+          <argLine>-Xmx2G -Dsun.net.inetaddr.ttl=1 -Dsun.net.inetaddr.negative.ttl=1 -Djava.net.preferIPv4Stack=true -Dio.netty.leakDetection.level=paranoid ${test.additional.args} ${jacoco.agent.argLine}</argLine>
+
+          <!-- 2. Eseguiamo SOLO i tuoi test -->
+          <includes>
+            <include>**/BookieInfoReaderTest.java</include>
+            <include>**/BufferedChannelTest.java</include>
+          </includes>
+
+          <!-- 3. Manteniamo le altre opzioni originali di BookKeeper -->
+          <redirectTestOutputToFile>${redirectTestOutputToFile}</redirectTestOutputToFile>
+          <forkCount>${forkCount.variable}</forkCount>
+          <reuseForks>false</reuseForks>
+          <trimStackTrace>false</trimStackTrace>
+          <forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>
+          <rerunFailingTestsCount>${testRetryCount}</rerunFailingTestsCount>
+        </configuration>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -1035,6 +1115,7 @@
           <rerunFailingTestsCount>${testRetryCount}</rerunFailingTestsCount>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
@@ -1214,6 +1295,11 @@
           </groovy>
         </configuration>
       </plugin>
+      <!-- progetto testing: attivazione jacoco -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+      </plugin>
     </plugins>
   </build>
   <profiles>
@@ -1221,6 +1307,7 @@
       <id>owasp-dependency-check</id>
       <build>
         <plugins>
+
           <plugin>
             <groupId>org.owasp</groupId>
             <artifactId>dependency-check-maven</artifactId>
@@ -1417,6 +1504,7 @@
       <build>
         <pluginManagement>
           <plugins>
+
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-compiler-plugin</artifactId>
