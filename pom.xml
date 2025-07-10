@@ -1027,17 +1027,18 @@
           <version>1.9.0</version>
           <configuration>
             <targetClasses>
+
               <!-- classi da mutare -->
+              <param>org.apache.bookkeeper.bookie.BufferedChannel</param>
+              <param>org.apache.bookkeeper.client.BookieInfoReader</param>
 
-<!--              <param>org.apache.bookkeeper.bookie.BufferedChannel</param>-->
-              <param>org.apache.bookkeeper.bookie.BufferedChannelRegressionTest*</param>
+<!--              <param>org.apache.bookkeeper.bookie.BufferedChannelRegressionTest*</param>-->
 
-              <!--              <param>org.apache.bookkeeper.client.BookieInfoReader</param>-->
             </targetClasses>
             <targetTests>
               <!-- test da eseguire -->
-<!--              <param>org.apache.bookkeeper.bookie.BufferedChannelTest</param>-->
-<!--              <param>org.apache.bookkeeper.client.BookieInfoReaderTest</param>-->
+              <param>org.apache.bookkeeper.bookie.BufferedChannelTest</param>
+              <param>org.apache.bookkeeper.client.BookieInfoReaderTest</param>
 
 <!--              <param>org.apache.bookkeeper.bookie.LLMBufferedChannelTest</param>-->
 <!--              <param>org.apache.bookkeeper.client.LLMBookieInfoReaderTest</param>-->
@@ -1095,15 +1096,17 @@
           <!-- 1. Combiniamo l'argLine originale con quella di JaCoCo -->
           <argLine>-Xmx2G -Dsun.net.inetaddr.ttl=1 -Dsun.net.inetaddr.negative.ttl=1 -Djava.net.preferIPv4Stack=true -Dio.netty.leakDetection.level=paranoid ${test.additional.args} ${jacoco.agent.argLine}</argLine>
 
-          <!-- 2. Eseguiamo SOLO i tuoi test -->
-<!--          <includes>-->
-<!--            <include>**/BookieInfoReaderTest.java</include>-->
-<!--            <include>**/BufferedChannelTest.java</include>-->
-<!--            -->
-<!--          </includes>-->
+          <!-- modificare qui per i test da eseguire-->
           <includes>
-            <include>**/BufferedChannelRegressionTest*.java</include>
+            <include>**/BookieInfoReaderTest.java</include>
+            <include>**/BufferedChannelTest.java</include>
+
           </includes>
+<!--          Randoop-->
+<!--          <includes>-->
+<!--            <include>**/BufferedChannelRegressionTest*.java</include>-->
+<!--          </includes>-->
+
           <!-- 3. Manteniamo le altre opzioni originali di BookKeeper -->
           <redirectTestOutputToFile>${redirectTestOutputToFile}</redirectTestOutputToFile>
           <forkCount>${forkCount.variable}</forkCount>

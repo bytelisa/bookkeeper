@@ -299,15 +299,19 @@
           <!-- 1costruisce l'argLine per JaCoCo e per il progetto -->
           <argLine>${test.additional.args} ${jacoco.agent.argLine}</argLine>
 
-          <!-- eseguo solo i miei test -->
+<!--          modificare qui per i test da eseguire-->
           <includes>
-            <include>**/BufferedChannelRegressionTest*.java</include>
 
-<!--            <include>**/RegressionTest*.java</include>-->
-<!--            <include>**/BufferedChannelTest.java</include>-->
-<!--            <include>**/BookieInfoReaderTest.java</include>-->
-<!--            <include>**/LLMBookieInfoReaderTest.java</include>-->
-<!--            <include>**/LLMBufferedChannelTest.java</include>-->
+            <include>**/BufferedChannelTest.java</include>
+            <include>**/BookieInfoReaderTest.java</include>
+
+            <!--            LLM-->
+<!--        <include>**/LLMBookieInfoReaderTest.java</include>-->
+<!--        <include>**/LLMBufferedChannelTest.java</include>-->
+
+            <!--            Randoop-->
+<!--        <include>**/BufferedChannelRegressionTest*.java</include>-->
+<!--        <include>**/RegressionTest*.java</include>-->
 
           </includes>
 
