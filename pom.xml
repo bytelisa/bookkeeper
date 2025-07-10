@@ -1028,13 +1028,22 @@
           <configuration>
             <targetClasses>
               <!-- classi da mutare -->
-              <param>org.apache.bookkeeper.bookie.BufferedChannel</param>
-              <param>org.apache.bookkeeper.client.BookieInfoReader</param>
+
+<!--              <param>org.apache.bookkeeper.bookie.BufferedChannel</param>-->
+              <param>org.apache.bookkeeper.bookie.BufferedChannelRegressionTest*</param>
+
+              <!--              <param>org.apache.bookkeeper.client.BookieInfoReader</param>-->
             </targetClasses>
             <targetTests>
               <!-- test da eseguire -->
-              <param>org.apache.bookkeeper.bookie.BufferedChannelTest</param>
-              <param>org.apache.bookkeeper.client.BookieInfoReaderTest</param>
+<!--              <param>org.apache.bookkeeper.bookie.BufferedChannelTest</param>-->
+<!--              <param>org.apache.bookkeeper.client.BookieInfoReaderTest</param>-->
+
+<!--              <param>org.apache.bookkeeper.bookie.LLMBufferedChannelTest</param>-->
+<!--              <param>org.apache.bookkeeper.client.LLMBookieInfoReaderTest</param>-->
+
+<!--                test di Randoop -->
+              <param>RegressionTest*</param>
             </targetTests>
           </configuration>
         </plugin>
@@ -1087,11 +1096,14 @@
           <argLine>-Xmx2G -Dsun.net.inetaddr.ttl=1 -Dsun.net.inetaddr.negative.ttl=1 -Djava.net.preferIPv4Stack=true -Dio.netty.leakDetection.level=paranoid ${test.additional.args} ${jacoco.agent.argLine}</argLine>
 
           <!-- 2. Eseguiamo SOLO i tuoi test -->
+<!--          <includes>-->
+<!--            <include>**/BookieInfoReaderTest.java</include>-->
+<!--            <include>**/BufferedChannelTest.java</include>-->
+<!--            -->
+<!--          </includes>-->
           <includes>
-            <include>**/BookieInfoReaderTest.java</include>
-            <include>**/BufferedChannelTest.java</include>
+            <include>**/BufferedChannelRegressionTest*.java</include>
           </includes>
-
           <!-- 3. Manteniamo le altre opzioni originali di BookKeeper -->
           <redirectTestOutputToFile>${redirectTestOutputToFile}</redirectTestOutputToFile>
           <forkCount>${forkCount.variable}</forkCount>

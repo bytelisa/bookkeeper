@@ -296,19 +296,24 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
-          <!-- 1. Costruiamo l'argLine per JaCoCo e per il progetto -->
+          <!-- 1costruisce l'argLine per JaCoCo e per il progetto -->
           <argLine>${test.additional.args} ${jacoco.agent.argLine}</argLine>
 
-          <!-- 2. Eseguiamo SOLO i tuoi test specifici -->
+          <!-- eseguo solo i miei test -->
           <includes>
-            <include>**/BookieInfoReaderTest.java</include>
-            <include>**/BufferedChannelTest.java</include>
+            <include>**/BufferedChannelRegressionTest*.java</include>
+
+<!--            <include>**/RegressionTest*.java</include>-->
+<!--            <include>**/BufferedChannelTest.java</include>-->
+<!--            <include>**/BookieInfoReaderTest.java</include>-->
+<!--            <include>**/LLMBookieInfoReaderTest.java</include>-->
+<!--            <include>**/LLMBufferedChannelTest.java</include>-->
+
           </includes>
 
-          <!-- 3. Manteniamo il fork, come richiesto dal progetto -->
           <forkCount>1</forkCount>
 
-          <!-- 4. Manteniamo le altre configurazioni utili ereditate -->
+          <!-- Manteniamo le altre configurazioni utili ereditate -->
           <trimStackTrace>false</trimStackTrace>
           <properties>
             <property>
