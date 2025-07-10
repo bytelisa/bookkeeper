@@ -321,36 +321,6 @@ public class BufferedChannelTest {
     // --- Test per altri metodi ---
 
     /**
-     * [CORRETTO] Testa che, dopo un flush, il metodo close() chiuda il file channel.
-     * Questo test è stato corretto per leggere il contenuto del buffer catturato in modo
-     * robusto, senza usare il metodo .array() che fallisce con i direct buffers.
-     */
-//    @Test
-//    public void testFlushAndClose_writesDataAndClosesChannel() throws IOException {
-//        String data = "data to flush before close";
-//        bufferedChannel.write(createByteBuf(data));
-//
-//        // Quando si esegue il flush e poi si chiude il canale
-//        bufferedChannel.flush();
-//        bufferedChannel.close();
-//
-//        // Allora deve essere avvenuta una scrittura (dal flush)
-//        ArgumentCaptor<ByteBuffer> captor = ArgumentCaptor.forClass(ByteBuffer.class);
-//        verify(mockFileChannel, times(1)).write(captor.capture());
-//
-//        // Estrae i dati dal buffer catturato in modo sicuro (senza usare .array())
-//        ByteBuffer capturedBuffer = captor.getValue();
-//        byte[] capturedBytes = new byte[capturedBuffer.remaining()];
-//        capturedBuffer.get(capturedBytes);
-//        String flushedData = new String(capturedBytes, StandardCharsets.UTF_8);
-//
-//        assertEquals("I dati 'flushed' devono essere corretti", data, flushedData);
-//
-//        // E il file channel sottostante deve essere stato chiuso
-//        verify(mockFileChannel, times(1)).close();
-//    }
-
-    /**
      * Testa che il metodo clear() resetti il buffer di scrittura ma non la posizione assoluta.
      * Approccio: Black Box (verifica dello stato dopo l'operazione).
      */
